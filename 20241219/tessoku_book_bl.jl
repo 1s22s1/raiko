@@ -1,3 +1,5 @@
+using DataStructures
+
 function main()
     n, m = parseints()
 
@@ -13,26 +15,21 @@ function main()
     confirmed = Set()
     distances = fill(typemax(Int), n)
     distances[begin] = 0
+    pq = PriorityQueue(0 => 1)
 
-    while true
-        cur_position = -1
-        cur_distance = typemax(Int)
+    while !isempty(pq)
+        cur_cost, cur_pos = peek(pq)
+        dequeue!(pq)
 
-        for i ∈ 1:n
-            if i ∉ confirmed && distances[i] ≤ cur_distance
-                cur_position = i
-                cur_distance = distances[i]
+        if cur_pos ∉ confirmed
+            push!(confirmed, cur_cost)
+
+            for (next_pos, next_cost) ∈ g[cur_pos]
+                if distances[next_pos] > distances[cur_pos] + next_cost
+                    distances[next_pos] = distances[cur_pos] + next_cost
+                    pq[distances[next_pos]] = next_pos
+                end
             end
-        end
-
-        if cur_position == -1
-            break
-        end
-
-        push!(confirmed, cur_position)
-
-        for (next, cost) ∈ g[cur_position]
-            distances[next] = min(distances[next], distances[cur_position] + cost)
         end
     end
 
