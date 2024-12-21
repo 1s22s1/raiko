@@ -16,14 +16,14 @@ function main()
     distances[begin] = 0
     pq = PriorityQueue(0 => 1)
 
-    # confirmed = []
+    confirmed = []
 
     while !isempty(pq)
         _, cur_pos = peek(pq)
         dequeue!(pq)
 
-        # if cur_pos ∉ confirmed
-            # push!(confirmed, cur_pos)
+        if cur_pos ∉ confirmed
+            push!(confirmed, cur_pos)
 
             for (next_pos, next_cost) ∈ g[cur_pos]
                 tmp_cost = distances[cur_pos] + next_cost
