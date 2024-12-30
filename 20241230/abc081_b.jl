@@ -1,9 +1,20 @@
-const ARR = [1, 2, 4, 8, 16, 32, 64]
+using Primes
 
 function main()
     n = parseint()
+    an = parseints()
 
-    result = ARR[ARR.≤n][end]
+    result = typemax(Int)
+
+    for a ∈ an
+        count = 0
+        while iseven(a)
+            count += 1
+            a ÷= 2
+        end
+
+        result = min(result, count)
+    end
 
     println(result)
 end
